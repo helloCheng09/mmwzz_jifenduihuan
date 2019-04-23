@@ -6,14 +6,15 @@
         data-id="item.coupon_id"
         v-for="item in couponlistarr"
         :key="item.index"
+        @click="navtodetail(item.coupon_id)"
       >
         <img src="../assets/img/sc_img1@2x.png">
         <div class="right">
           <dd class="two-ellipsis">{{item.coupon_title}}</dd>
           <dt class="two-ellipsis">{{item.coupon_detail}}</dt>
           <div class="cou-price">
-            {{item.coupon_price}}
-            <span>聪明豆</span>
+            <span class="price-num">{{item.coupon_price}}</span>
+            <span  class="price-dou">聪明豆</span>
           </div>
           <div class="exchange-btn">
             <span>聪明豆兑换</span>
@@ -44,8 +45,6 @@
 <script>
 let _self;
 import router from "../router.js";
-import { clearTimeout } from "timers";
-import { constants } from "crypto";
 export default {
   data() {
     return {
@@ -112,12 +111,15 @@ export default {
 
       loadingani: false,
       isover: false,
-      mytimer: null
+      mytimer: null,
+
+      page: 1,
     };
   },
   beforeMount() {
     _self = this;
     console.log(this.couponlistarr);
+
   },
   mounted() {
     this.scrollTop();
@@ -140,13 +142,26 @@ export default {
             _self.couponlistarr2.forEach(item => {
                 _self.couponlistarr.push(item)
             });
-            
             console.log(_self.couponlistarr)
             _self.loadingani = false; // 关闭加载动画
+            if (_self.page == 3){
+               _self.isover = true 
+               return false
+            }
+            _self.page ++ // 页码增加
             _self.show(); // 递归滚动监听时间
         }, 1000);
       }
+    },
+    navtodetail (id) {
+      router.push({
+        name: 'coupondet',
+        params: {
+          id: id
+        }
+      })
     }
+
   }
 };
 </script>
@@ -155,6 +170,7 @@ export default {
 <style scope lang='less'>
 .list-bx {
 }
+// 优惠券列表公共样式
 .list-item {
   display: flex;
   padding: 10px;
@@ -162,29 +178,43 @@ export default {
   background-color: #fff;
   > img {
     width: 58%;
-    height: 134px;
+    height: 142px;
     object-fit: cover;
     margin-right: 10px;
   }
   .right {
     flex: 1;
     dd {
+      height: 39px;
       line-height: 1.2;
       margin-bottom: 4px;
+      
     }
     dt {
+      height: 29px;
+      margin-bottom: 4px;
       line-height: 1.2;
       font-size: 12px;
       color: #808080;
     }
     .cou-price {
       margin-bottom: 10px;
-      font-size: 20px;
+      font-size: 22px;
       color: #009ffb;
-      > span {
+      
+      .price-num {
+        vertical-align: middle;
+      }
+      .price-dou {
+        padding-left: 4px;
         font-size: 14px;
         color: #808080;
       }
+    }
+    .daoqi-text {
+      margin-top: 10px;
+      line-height: 1.2;
+      color: #808080;
     }
     .exchange-btn {
       text-align: right;

@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">列表</router-link> |
-       <router-link to="/coupondet">详情</router-link> |
-        <router-link to="/couponcenter">我的</router-link> |
+      <!-- <router-link to="/">列表</router-link> |
+      <router-link to="/coupondet">详情</router-link> |
+      <router-link to="/couponcenter">我的</router-link> | -->
     </div>
-    <router-view />
+		<router-view />
   </div>
 </template>
 
@@ -479,4 +479,7 @@ table {
 		color: #009ffb;
 	}
 }
+
+
+
 </style>
