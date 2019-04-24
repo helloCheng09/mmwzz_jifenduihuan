@@ -27,7 +27,7 @@
         </div>
         <div class="right-btn">聪明豆兑换</div>
       </div>
-      <div class="surplus-bx">*xxx的家长,您的孩子剩余：{{coupondet.coupon_surplus}}聪明豆</div>
+      <div class="surplus-bx">*xxx的家长,您的孩子剩余：{{coupondet.coupon_surplus}} 个聪明豆</div>
       <div class="bot-normal-item">
         <label>优惠说明</label>
         <div class="intro-text">{{coupondet.coupon_detail}}</div>
@@ -71,12 +71,13 @@ export default {
         coupon_end: "2019-05-24",
         coupon_surplus: "22344"
       },
-      coupon_id: ''
+      coupon_id: '',
     };
   },
   mounted() {
     this.coupon_id = this.$route.params.id // 获取优惠券id参数
     this.getDetail() // 获取优惠券详情
+    
   },
   methods: {
     getDetail () {

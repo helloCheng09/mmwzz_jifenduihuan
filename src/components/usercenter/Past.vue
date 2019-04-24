@@ -18,14 +18,16 @@
           <div class="daoqi-text">{{coupondet.coupon_end}}到期</div>
         </div>
       </div>
+      <!-- {{count}} -->
     </div>
 
 </template>
 
 
  <script>
- 
+  import store from '../../store.js'
 export default {
+  
      data() {
       return {
         coupondet: {
@@ -40,9 +42,16 @@ export default {
           coupon_end: "2019-03-24",
           coupon_surplus: "22344"
         },
+            store: {}
       }
     },
- 
+    mounted() {
+    },
+    computed: {
+      count() {
+        return store.state.count
+      }
+    },
 }
 
  </script>

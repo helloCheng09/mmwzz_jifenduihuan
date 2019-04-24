@@ -13,6 +13,7 @@
 let _self
 import Apiurl from './api/Api.js'
 import router from './router.js'
+
 export default {
 	data() {
 		return {
@@ -23,11 +24,10 @@ export default {
 	},
 	mounted () {
 		console.log(Apiurl.api())
-		
-
 	}
 	
 }
+
 </script>
 
 <style lang="less">

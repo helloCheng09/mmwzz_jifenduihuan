@@ -2,6 +2,7 @@
   <div id="couponcenterwrap">
     <div class="center-top">
       <div class="center-item">
+        <span class="none-coupon danwei" v-if="nocoupon">暂无优惠券</span>
         <span class="num">11</span>
         <span class="danwei">张</span>
       </div>
@@ -23,7 +24,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      nocoupon: false,
+    };
   },
   mounted() {},
   methods: {}
