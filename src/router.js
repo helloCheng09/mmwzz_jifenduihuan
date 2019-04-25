@@ -15,16 +15,15 @@ const router = new Router({
   // base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/couponlist/:id',
       name: 'couponlist',
       component: Couponlist,
       meta: {
         title:'妈妈我在这-优惠券'
       }
-
     }, 
     {
-      path: '/coupondet/:id',
+      path: '/coupondet/:id/:student_id',
       name: 'coupondet',
       // component: Coupondet
       component: () => import(/* webpackChunkName: "about" */ './views/Coupondet.vue'),

@@ -1,23 +1,23 @@
 <template>
   <div id="couponlistwrap">
-    <ul class="list-bx">
+    <ul class="list-bx" ref="elememtList">
       <li
         class="list-item"
-        data-id="item.coupon_id"
+        :data-id="item.id"
         v-for="item in couponlistarr"
         :key="item.index"
-        @click="navtodetail(item.coupon_id)"
+        @click="navtodetail(item.id)"
       >
-        <img src="../assets/img/sc_img1@2x.png">
+        <img :src="item.pic">
         <div class="right">
-          <dd class="two-ellipsis">{{item.coupon_title}}</dd>
-          <dt class="two-ellipsis">{{item.coupon_detail}}</dt>
+          <dd class="two-ellipsis">{{item.name}}</dd>
+          <dt class="two-ellipsis">{{item.intro}}</dt>
           <div class="cou-price">
-            <span class="price-num">{{item.coupon_price}}</span>
-            <span  class="price-dou">聪明豆</span>
+            <span class="price-num">{{item.price}}</span>
+            <span class="price-dou">聪明豆</span>
           </div>
           <div class="exchange-btn">
-            <span>聪明豆兑换</span>
+            <span>兑换优惠券</span>
           </div>
         </div>
       </li>
@@ -39,137 +39,131 @@
     <div class="loading-over" v-if="isover">
       <span>———— 加载完了 ————</span>
     </div>
+    <div class="loading-over" v-if="isnone">
+      <span>———— 暂无优惠券 ————</span>
+    </div>
   </div>
 </template>
 
 <script>
+import { clearTimeout } from "timers";
 let _self;
-import router from "../router.js";
 export default {
   data() {
     return {
-      couponlistarr: [
-        {
-          coupon_id: "1",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        }
-      ],
-      couponlistarr2: [
-        {
-          coupon_id: "1",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        },
-        {
-          coupon_id: "2",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        },
-        {
-          coupon_id: "3",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        },
-        {
-          coupon_id: "4",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        },
-        {
-          coupon_id: "5",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        },
-        {
-          coupon_id: "6",
-          coupon_pic: "xxxx.png",
-          coupon_title: "云课堂八折券",
-          coupon_price: "188",
-          coupon_detail: "这个优惠券用户云课堂的课程购买",
-          coupon_city: "合肥"
-        }
-      ],
-
+      couponlistarr: [],
+      student_id: "",
       loadingani: false,
       isover: false,
-      mytimer: null,
-
+      isnone: false,
+      mytimer: "",
+      loadtimer: "",
       page: 1,
+      couponlisturl: this.$api().couponlisturl // 优惠券列表请求地址
     };
   },
   beforeMount() {
     _self = this;
-    console.log(this.couponlistarr);
-
+    // 获取学生id
+    this.student_id = this.$route.params.id; // 获取优惠券id参数
   },
   mounted() {
-    this.scrollTop();
-    this.show();
+    // 获取优惠券列表
+    this.scrollLoad(); // 不足一屏加载 // 首屏加载
+    // this.show();
   },
   methods: {
     show() {
-      window.addEventListener("scroll", _self.scrollTop);
+      window.addEventListener("scroll", _self.scrollLoad);
     },
-    scrollTop() {
+    scrollLoad() {
       let scrollTop = document.documentElement.scrollTop; //滚动条的高
       let documentTop = document.body.scrollHeight; //全部内容的高
       let screenHeight = window.screen.availHeight; //当前屏幕的高
       if (scrollTop + screenHeight >= documentTop) {
-        //干你想干的事儿
-        // console.log(scrollTop, documentTop, screenHeight, "加载更多"); 
-        window.removeEventListener("scroll", _self.scrollTop); // 解除滚动监听事件
+        window.removeEventListener("scroll", _self.scrollLoad); // 解除滚动监听事件
         this.loadingani = true;
-        this.mytimer = setTimeout(() => {
-            _self.couponlistarr2.forEach(item => {
-                _self.couponlistarr.push(item)
-            });
-            console.log(_self.couponlistarr)
-            _self.loadingani = false; // 关闭加载动画
-            if (_self.page == 3){
-               _self.isover = true 
-               return false
-            }
-            _self.page ++ // 页码增加
-            _self.show(); // 递归滚动监听时间
-        }, 1000);
+        this.getlist({
+          id: this.student_id,
+          page: this.page
+        });
+        return false;
       }
     },
-    navtodetail (id) {
-      router.push({
-        name: 'coupondet',
-        params: {
-          id: id
-        }
+    // axios -> getlist
+    // opion {id 学生id page分页页码}
+    getlist(option) {
+      this.$http({
+        methods: "GET",
+        url: _self.couponlisturl + "?id=" + option.id + "&page=" + option.page
       })
+        .then(res => {
+          if (res.data.code == 1 || res.data.code == 3) {
+            // 获取成功
+            let data = res.data.data;
+            let total_page = data.total_page;
+            let list = data.list;
+            list.forEach(item => {
+              _self.couponlistarr.push(item);
+            });
+            _self.loadingani = false; // 关闭加载动画
+            if (_self.page >= total_page) {
+              _self.isover = true;
+              return false;
+            } 
+            _self.page ++; // 页码增加
+            _self.show();
+            
+            window.clearTimeout(_self.mytimer)
+            _self.mytimer = setTimeout(() => {
+              var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
+              var screenHeight = window.screen.availHeight; //当前屏幕的高
+              if (documentTop < screenHeight) {
+                _self.getlist({
+                  id: this.student_id,
+                  page: this.page
+                }); // 不足一屏加载
+                return false;
+              } 
+            }, 0);
+          }  else  {
+            console.log(9888)
+            _self.loadingani = false; // 关闭加载动画
+            _self.isnone = true;
+            _self.$message({
+              message: res.data.msg,
+              center: true,
+              duration: 1500,
+              type: "error"
+            });
+            return false;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          _self.$message({
+            message: err,
+            center: true,
+            duration: 2000,
+            customClass: "axios-wrong-msg el-message--error",
+            iconClass: "el-icon-guide"
+          });
+        });
+    },
+    navtodetail(id) {
+      this.$router.push({
+        name: "coupondet",
+        params: {
+          id: id,
+          student_id: this.student_id
+        }
+      });
     }
-
   }
 };
 </script>
 
-
-<style scope lang='less'>
-.list-bx {
-}
+<style  lang='less' scope>
 // 优惠券列表公共样式
 .list-item {
   display: flex;
@@ -188,7 +182,6 @@ export default {
       height: 39px;
       line-height: 1.2;
       margin-bottom: 4px;
-      
     }
     dt {
       height: 29px;
@@ -201,7 +194,7 @@ export default {
       margin-bottom: 10px;
       font-size: 22px;
       color: #009ffb;
-      
+
       .price-num {
         vertical-align: middle;
       }

@@ -4,11 +4,11 @@
         class="list-item"
         data-id="item.coupon_id"
       >
-        <img src="../../assets/img/sc_img1@2x.png">
+        <img class="img-center" src="../../assets/img/sc_img1@2x.png">
         <div class="right">
           <dd class="two-ellipsis">{{coupondet.coupon_title}}</dd>
           <dt class="two-ellipsis">{{coupondet.coupon_detail}}</dt>
-          <div class="cou-price">
+          <div class="cou-price center-price">
             <!-- <span class="price-num">{{coupondet.coupon_price}}</span>
             <span class="price-dou">聪明豆</span> -->
           </div>
@@ -48,14 +48,12 @@ export default {
  </script>
 
 
-<style scope lang='less' scope>
-.list-item > img {
+<style  lang='less' scope>
+.list-item .img-center {
   height: 105px;
 }
-.list-item .right .cou-price {
+.list-item .right .center-price {
   margin-bottom: 0;
-}
-.list-item .right dt {
 }
 
 
