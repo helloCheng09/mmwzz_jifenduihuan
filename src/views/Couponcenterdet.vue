@@ -29,6 +29,10 @@
       </div> -->
       <!-- <div class="surplus-bx">*尊敬的{{coupondet.student_name}}的家长,您的孩子剩余：{{coupondet.coupon_surplus}} 个聪明豆</div> -->
       <div class="bot-normal-item">
+        <label>券号</label>
+        <div class="intro-text">{{coupondet.coupon_num}}</div>
+      </div>
+      <div class="bot-normal-item">
         <label>优惠说明</label>
         <div class="intro-text">{{coupondet.name}}</div>
       </div>

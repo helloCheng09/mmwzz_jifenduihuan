@@ -12,7 +12,7 @@
         <img :src="item.pic">
         <div class="right">
           <dd class="two-ellipsis">{{item.name}}</dd>
-          <dt class="two-ellipsis">{{item.intro}}</dt>
+          <!-- <dt class="two-ellipsis">{{item.intro}}</dt> -->
           <div class="cou-price">
             <span class="price-num">{{item.price}}</span>
             <span class="price-dou">聪明豆</span>
@@ -125,21 +125,24 @@ export default {
               _self.isover = true;
               return false;
             }
+              _self.page++; // 页码增加
+            _self.show();
             // window.clearTimeout(_self.mytimer)
             // _self.mytimer = setTimeout(() => {
-            //   var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
-            //   var screenHeight = window.screen.availHeight; //当前屏幕的高
-            //   if (documentTop < screenHeight) {
-            //     _self.getlist({
-            //       id: _self.student_id,
-            //       page: _self.page
-            //     }); // 不足一屏加载
-            //     return false;
-            //   }
+              
+              var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
+              console.log(documentTop)
+              var screenHeight = window.screen.availHeight; //当前屏幕的高
+              if (documentTop < screenHeight) {
+                _self.getlist({
+                  id: _self.student_id,
+                  page: _self.page
+                }); // 不足一屏加载
+                return false;
+              }
             // }, 0);
 
-            _self.page++; // 页码增加
-            _self.show();
+          
           } else {
             _self.loadingani = false; // 关闭加载动画
             _self.isnone = true;
@@ -187,9 +190,10 @@ export default {
   background-color: #fff;
   > img {
     width: 58%;
-    height: 142px;
+    height: 103px;
     object-fit: cover;
     margin-right: 10px;
+    border-radius: 4px;
   }
   .right {
     flex: 1;
@@ -206,7 +210,8 @@ export default {
       color: #808080;
     }
     .cou-price {
-      margin-bottom: 10px;
+      text-align: right;
+      margin-bottom: 4px;
       font-size: 22px;
       color: #009ffb;
 
