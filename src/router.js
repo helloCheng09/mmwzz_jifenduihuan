@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Couponlist from './views/Couponlist.vue'
 import Coupondet from './views/Coupondet.vue'
 import Couponcenter from './views/Couponcenter.vue'
+import Couponcenterdet from './views/Couponcenterdet.vue'
 import Used from './components/usercenter/Used.vue'
 import Notuse from './components/usercenter/Notuse.vue'
 import Past from './components/usercenter/Past.vue'
@@ -19,34 +20,46 @@ const router = new Router({
       name: 'couponlist',
       component: Couponlist,
       meta: {
-        title:'妈妈我在这-优惠券'
+        title:'妈妈我在这-优惠券',
+        navShow: true
       }
     }, 
     {
       path: '/coupondet/:id/:student_id',
       name: 'coupondet',
-      // component: Coupondet
-      component: () => import(/* webpackChunkName: "about" */ './views/Coupondet.vue'),
-      meta: {title:'妈妈我在这-优惠券详情'},
+      component: Coupondet,
+      meta: {
+        title:'妈妈我在这-优惠券详情',
+        navShow: false
+      },
     },
     {
-      path: '/couponcenter',
-      name: 'couponcenter',
-      // component: Couponcenter
-      component: () => import(/* webpackChunkName: "about" */ './views/Couponcenter.vue'),
+      path: '/couponcenter/:id',
+      // name: 'couponcenter',
+      component: Couponcenter,
       meta: {
-        title:'妈妈我在这-我的优惠券'
+        title:'妈妈我在这-我的优惠券',
+        navShow: true
       },
       children: [{
           path:'/',
-          component: Notuse
+          component: Notuse,
         },{
-          path:'used',
-          component: Used
+          path:'used/',
+          component: Used,
         },{
-          path:'past',
-          component: Past
+          path:'past/',
+          component: Past,
       }]
+    },
+    {
+      path: '/couponcenterdet/:id',
+      name: 'couponcenterdet',
+      component: Couponcenterdet,
+      meta: {
+        title:'妈妈我在这-优惠券详情',
+        navShow: false
+    },
     },
   ]
 

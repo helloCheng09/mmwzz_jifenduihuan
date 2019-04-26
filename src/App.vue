@@ -1,31 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <router-link to="/">列表</router-link> |
-      <router-link to="/coupondet">详情</router-link> |
-      <router-link to="/couponcenter">我的</router-link> |-->
+    <div id="nav" v-if="navshow">
+      <div class="nav-list">
+        <router-link :to="'/couponlist/'+ student_id" >兑换优惠券</router-link>
+        <router-link :to="'/couponcenter/'+ student_id">我的优惠券</router-link>
+      </div>
     </div>
-    <router-view/>
+    <div>
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
 let _self;
-import router from "@/router.js";
 import Apiurl from "@/api/Api.js";
 
 export default {
   data() {
     return {
-      params: ""
+      student_id: ''
     };
   },
-  beforeMount() {},
-  mounted() {}
+  computed: {
+    navshow () {
+      return this.$store.state.navshow
+    }
+  },
+  beforeMount () {
+     // 获取url学生id
+    this.student_id = this.$route.params.id;
+  },
+  mounted() {
+    
+  },
 };
 </script>
 
 <style lang="less">
+#nav {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  z-index: 997;
+  .nav-list {
+    margin: 10px 15px 0;
+    height: 30px;
+    display: flex;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid #009ffb;
+  }
+  a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    line-height: 28px;
+    color: #009ffb;
+  }
+  .router-link-active {
+    background-color: #009ffb;
+    color: #fff;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
     "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;

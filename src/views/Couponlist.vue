@@ -6,8 +6,9 @@
         :data-id="item.id"
         v-for="item in couponlistarr"
         :key="item.index"
-        @click="navtodetail(item.id)"
+        @click="gotodetail(item.id)"
       >
+     
         <img :src="item.pic">
         <div class="right">
           <dd class="two-ellipsis">{{item.name}}</dd>
@@ -46,7 +47,6 @@
 </template>
 
 <script>
-import { clearTimeout } from "timers";
 let _self;
 export default {
   data() {
@@ -68,19 +68,33 @@ export default {
     this.student_id = this.$route.params.id; // 获取优惠券id参数
   },
   mounted() {
+    this.$store.commit("creatnav"); // 生成导航栏
+    this.scrollLoad(); // 首屏加载
     // 获取优惠券列表
-    this.scrollLoad(); // 不足一屏加载 // 首屏加载
     // this.show();
+  },
+  activated() {
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", _self.scrollLoad);
   },
   methods: {
     show() {
       window.addEventListener("scroll", _self.scrollLoad);
     },
     scrollLoad() {
-      let scrollTop = document.documentElement.scrollTop; //滚动条的高
-      let documentTop = document.body.scrollHeight; //全部内容的高
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop; //滚动条的高
       let screenHeight = window.screen.availHeight; //当前屏幕的高
-      if (scrollTop + screenHeight >= documentTop) {
+
+      var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
+      // _self.$message({
+      //     message: scrollTop,
+      //     center: true,
+      //     duration: 1500,
+      //     type: "error"
+      //   });
+      // console.log(scrollTop,  screenHeight, documentTop)
+      if (scrollTop + screenHeight  >= documentTop) {
         window.removeEventListener("scroll", _self.scrollLoad); // 解除滚动监听事件
         this.loadingani = true;
         this.getlist({
@@ -110,24 +124,23 @@ export default {
             if (_self.page >= total_page) {
               _self.isover = true;
               return false;
-            } 
-            _self.page ++; // 页码增加
+            }
+            // window.clearTimeout(_self.mytimer)
+            // _self.mytimer = setTimeout(() => {
+            //   var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
+            //   var screenHeight = window.screen.availHeight; //当前屏幕的高
+            //   if (documentTop < screenHeight) {
+            //     _self.getlist({
+            //       id: _self.student_id,
+            //       page: _self.page
+            //     }); // 不足一屏加载
+            //     return false;
+            //   }
+            // }, 0);
+
+            _self.page++; // 页码增加
             _self.show();
-            
-            window.clearTimeout(_self.mytimer)
-            _self.mytimer = setTimeout(() => {
-              var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
-              var screenHeight = window.screen.availHeight; //当前屏幕的高
-              if (documentTop < screenHeight) {
-                _self.getlist({
-                  id: this.student_id,
-                  page: this.page
-                }); // 不足一屏加载
-                return false;
-              } 
-            }, 0);
-          }  else  {
-            console.log(9888)
+          } else {
             _self.loadingani = false; // 关闭加载动画
             _self.isnone = true;
             _self.$message({
@@ -140,7 +153,6 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
           _self.$message({
             message: err,
             center: true,
@@ -150,7 +162,7 @@ export default {
           });
         });
     },
-    navtodetail(id) {
+    gotodetail(id) {
       this.$router.push({
         name: "coupondet",
         params: {
@@ -165,6 +177,9 @@ export default {
 
 <style  lang='less' scope>
 // 优惠券列表公共样式
+#couponlistwrap {
+  margin-top: 50px;
+}
 .list-item {
   display: flex;
   padding: 10px;

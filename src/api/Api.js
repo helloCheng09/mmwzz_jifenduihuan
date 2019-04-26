@@ -10,13 +10,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 function api () {
-        return {
-            couponlisturl: baseUrl +  'couponlist.html',
-            coupondet: baseUrl + 'coupondetail',
-            couponexchange: baseUrl + 'couponexchang',
-            couponcenter: baseUrl + 'couponcenter',
-            couponcenterdet: baseUrl + 'couponcenter_detail',
-        }
+    return {
+        couponlisturl: baseUrl +  'couponlist.html',
+        coupondet: baseUrl + 'coupondetail',
+        couponexchange: baseUrl + 'couponexchang',
+        couponcenter: baseUrl + 'couponcenter',
+        couponcenterdet: baseUrl + 'couponcenter_detail',
     }
+}
 
 Vue.prototype.$api = api
