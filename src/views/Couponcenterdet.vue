@@ -45,6 +45,10 @@
         <label>使用须知</label>
         <div class="intro-text">{{coupondet.intro}}</div>
       </div>
+      <div class="bot-normal-item" v-if="coupondet.qrcode">
+        <label>二维码信息</label>
+        <img :src="coupondet.qrcode">
+      </div>
     </div>
   </div>
 </template>
