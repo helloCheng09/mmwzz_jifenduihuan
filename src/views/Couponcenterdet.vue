@@ -45,9 +45,9 @@
         <label>使用须知</label>
         <div class="intro-text">{{coupondet.intro}}</div>
       </div>
-      <div class="bot-normal-item" v-if="coupondet.qrcode">
+      <div class="bot-normal-item" v-if="qdcode">
         <label>二维码信息</label>
-        <img :src="coupondet.qrcode">
+        <img class="qdcode-img" :src="qdcode">
       </div>
     </div>
   </div>
@@ -61,7 +61,10 @@ export default {
       coupondet: {},
       coupon_id: '', // 优惠券id
       student_id: '', // 学生id
+      // qdcode: 'http://qr.liantu.com/api.php?text=155661596267610|openid', // 二维码
+      qdcode: '', // 二维码
       coupondet: this.$api().couponcenterdet, // 学生中心优惠券详情请求地址
+      couponcentercode:  this.$api().couponcentercode, // 获取二维码接口地址
     };
   },
   // activated() {
@@ -80,12 +83,15 @@ export default {
     getDetail () {
       this.$http({
           methods: 'GET',
-          url: _self.coupondet + '?id=' + _self.coupon_id,
+          url: _self.coupondet + '?id=' + _self.coupon_id 
+          + "&student_id=" + _self.student_id,
       })
       .then (res => {
           if (res.data.code == 1) {
             var data = res.data.data
             _self.coupondet = data
+            _self.qdcode = 'http://qr.liantu.com/api.php?text=' + data.coupon_num + '|' + data.openid
+            // _self.getcode (_self.coupondet.coupon_num) // 通过订单号 coupon_num 获取二维码
           } else {
             alert(res.data.msg)
           }
@@ -94,6 +100,24 @@ export default {
           alert(err)
       })
     },
+    getcode(couponnum) {
+      this.$http({
+          methods: 'GET',
+          url: _self.couponcentercode + '?coupon_num=' + couponnum 
+      })
+      .then (res => {
+          _self.qdcode = res.data
+          console.log(res.data)
+          // if (res.data.code == 1) {
+          //   console.log(res.data)
+          // } else {
+          //   alert(res.data.msg)
+          // }
+      })
+      .catch (err => {
+          alert(err)
+      })
+    }
   }
 };
 </script>
@@ -112,6 +136,10 @@ export default {
 }
 .list-item .right .cou-price {
   margin-bottom: 0;
+}
+.qdcode-img {
+  width: 150px;
+  height: 150px;
 }
 .mid-main {
   padding: 10px;

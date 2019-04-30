@@ -167,7 +167,8 @@ export default {
       this.$router.push({
         name: "couponcenterdet",
         params: {
-          id: id
+          id: id,
+          student_id: _self.student_id
         }
       });
     }

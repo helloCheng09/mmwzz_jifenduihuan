@@ -16,7 +16,7 @@ const router = new Router({
   // base: process.env.BASE_URL,
   routes: [
     {
-      path: '/couponlist/:id',
+      path: '/couponlist/:id', // 学生id 
       name: 'couponlist',
       component: Couponlist,
       meta: {
@@ -25,7 +25,7 @@ const router = new Router({
       }
     }, 
     {
-      path: '/coupondet/:id/:student_id',
+      path: '/coupondet/:id/:student_id', // 优惠券id  学生id
       name: 'coupondet',
       component: Coupondet,
       meta: {
@@ -34,7 +34,7 @@ const router = new Router({
       },
     },
     {
-      path: '/couponcenter/:id',
+      path: '/couponcenter/:id', // 优惠券学生id
       // name: 'couponcenter',
       component: Couponcenter,
       meta: {
@@ -53,7 +53,7 @@ const router = new Router({
       }]
     },
     {
-      path: '/couponcenterdet/:id',
+      path: '/couponcenterdet/:id/:student_id', // 优惠券id 学生id
       name: 'couponcenterdet',
       component: Couponcenterdet,
       meta: {
