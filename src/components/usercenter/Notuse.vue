@@ -58,7 +58,8 @@ export default {
       isover: false,
       isnone: false,
       mytimer: "",
-      student_id: ""
+      student_id: "",
+      coupon_type: 1, // 优惠券分类 1还未使用
     };
   },
   beforeMount() {
@@ -99,7 +100,8 @@ export default {
           _self.$api().couponcenter +
           "?id=" +
           option.id +
-          "&coupon_type=1" +
+          "&coupon_type="+
+          _self.coupon_type +
           "&page=" +
           option.page // 未使用优惠券请求地址
       })
@@ -169,7 +171,8 @@ export default {
         name: "couponcenterdet",
         params: {
           id: id,
-          student_id: _self.student_id
+          student_id: _self.student_id,
+          coupon_type: _self.coupon_type
         }
       });
     }

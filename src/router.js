@@ -53,7 +53,7 @@ const router = new Router({
       }]
     },
     {
-      path: '/couponcenterdet/:id/:student_id', // 优惠券id 学生id
+      path: '/couponcenterdet/:id/:student_id/:coupon_type', // 优惠券id 学生id
       name: 'couponcenterdet',
       component: Couponcenterdet,
       meta: {

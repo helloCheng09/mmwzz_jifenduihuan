@@ -77,6 +77,7 @@ export default {
       qdcode: '', // 二维码
       coupondet: this.$api().couponcenterdet, // 学生中心优惠券详情请求地址
       couponcentercode:  this.$api().couponcentercode, // 获取二维码接口地址
+      coupon_type: '', // 优惠券类型 1 未使用 2 已使用 3 过期
     };
   },
   // activated() {
@@ -88,6 +89,7 @@ export default {
     _self = this
     this.coupon_id = this.$route.params.id // 获取优惠券id参数
     this.student_id = this.$route.params.student_id // 获取优惠券id参数
+    this.coupon_type = this.$route.params.coupon_type 
     this.getDetail() // 获取优惠券详情
   },
 
@@ -98,8 +100,7 @@ export default {
     getDetail () {
       this.$http({
           methods: 'GET',
-          url: _self.coupondet + '?id=' + _self.coupon_id 
-          + "&student_id=" + _self.student_id,
+          url: _self.coupondet + '?id=' + _self.coupon_id  + "&student_id=" + _self.student_id + '&coupon_type=' + _self.coupon_type,
       })
       .then (res => {
           if (res.data.code == 1) {
@@ -115,24 +116,24 @@ export default {
           alert(err)
       })
     },
-    getcode(couponnum) {
-      this.$http({
-          methods: 'GET',
-          url: _self.couponcentercode + '?coupon_num=' + couponnum 
-      })
-      .then (res => {
-          _self.qdcode = res.data
-          console.log(res.data)
-          // if (res.data.code == 1) {
-          //   console.log(res.data)
-          // } else {
-          //   alert(res.data.msg)
-          // }
-      })
-      .catch (err => {
-          alert(err)
-      })
-    }
+    // getcode(couponnum) {
+    //   this.$http({
+    //       methods: 'GET',
+    //       url: _self.couponcentercode + '?coupon_num=' + couponnum 
+    //   })
+    //   .then (res => {
+    //       _self.qdcode = res.data
+    //       console.log(res.data)
+    //       // if (res.data.code == 1) {
+    //       //   console.log(res.data)
+    //       // } else {
+    //       //   alert(res.data.msg)
+    //       // }
+    //   })
+    //   .catch (err => {
+    //       alert(err)
+    //   })
+    // }
   }
 };
 </script>
