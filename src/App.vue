@@ -38,6 +38,25 @@ export default {
 </script>
 
 <style lang="less">
+#app {
+  min-height: 100vh;
+ 
+}
+ .mypop-img  {
+    top: 50%;
+    transform: translateY(50%);
+}
+  .coupencent-num-text {
+    position: absolute;
+    padding: 5px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: #009ffb;
+    color: #fff;
+  }
 #nav {
   width: 100%;
   height: 50px;

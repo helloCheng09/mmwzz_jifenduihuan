@@ -4,7 +4,15 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
-import { Message, MessageBox } from 'element-ui'; // 按需引入
+import { Message, MessageBox, Popover, Button } from 'element-ui'; // 按需引入
+
+Vue.use(
+  Popover
+);
+
+Vue.use(
+  Button
+);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;

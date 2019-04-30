@@ -6,6 +6,7 @@
         data-id="item.coupon_id"
       >
         <img class="img-det" :src="coupondet.pic">
+        <span class="coupencent-num-text" v-if="coupondet.num !=  1">{{coupondet.num}} 张</span>
         <div class="right det-card">
           <dd class="two-ellipsis">{{coupondet.name}}</dd>
           <!-- <dt class="two-ellipsis">{{coupondet.coupon_detail}}</dt> -->
@@ -47,9 +48,20 @@
       </div>
       <div class="bot-normal-item" v-if="qdcode">
         <label>二维码信息</label>
-        <img class="qdcode-img" :src="qdcode">
+        
+        <el-popover
+          placement="top"
+          popper-class="mypop-img"
+          width="100%"
+          trigger="click">
+          <img  class="qdcode-img-big" :src="qdcode">
+          <div slot="reference"><img  class="qdcode-img" :src="qdcode"></div>
+        </el-popover>
       </div>
     </div>
+    <!-- <div class="show-bg-img">
+      <img class="big-img" :src="qdcode">
+    </div> -->
   </div>
 </template>
 
@@ -80,6 +92,9 @@ export default {
   },
 
   methods: {
+    showcode() {
+
+    },
     getDetail () {
       this.$http({
           methods: 'GET',
@@ -126,6 +141,9 @@ export default {
 .coupondetwrap {
   margin-top: -50px;
 }
+.list-item {
+  position: relative;
+}
 .list-item .img-det {
   height: 105px;
 }
@@ -140,6 +158,10 @@ export default {
 .qdcode-img {
   width: 150px;
   height: 150px;
+}
+.qdcode-img-big {
+  width: 300px;
+  height: 300px;
 }
 .mid-main {
   padding: 10px;
@@ -192,5 +214,6 @@ export default {
     }
   }
 }
+
 </style>
 

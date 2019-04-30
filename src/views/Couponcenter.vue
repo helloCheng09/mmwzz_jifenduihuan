@@ -77,17 +77,7 @@ export default {
   .list-item {
     position: relative;
   }
-  .coupencent-num-text {
-    position: absolute;
-    padding: 5px;
-    bottom: 10px;
-    left: 10px;
-    font-size: 14px;
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 4px;
-    background-color: #009ffb;
-    color: #fff;
-  }
+
   .center-top {
     padding: 20px 0;
     text-align: center;
