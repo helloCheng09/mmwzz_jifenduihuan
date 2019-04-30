@@ -8,6 +8,7 @@
       @click="navtodetail(item.id)"
     >
       <img class="img-center" :src="item.pic">
+      <span class="coupencent-num-text" v-if="item.num !=  1">{{item.num}} 张</span>
       <div class="right">
         <dd class="two-ellipsis">{{item.name}}</dd>
         <dt class="two-ellipsis">{{item.intro}}</dt>
