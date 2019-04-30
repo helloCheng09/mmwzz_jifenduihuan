@@ -148,7 +148,7 @@ export default {
             _self.loadingani = false; // 关闭加载动画
             _self.isnone = true;
             _self.$message({
-              message: res.data.msg,
+              message: '数据请求失败~',
               center: true,
               duration: 1500,
               type: "error"

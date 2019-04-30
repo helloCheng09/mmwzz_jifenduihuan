@@ -66,7 +66,7 @@ export default {
 <style lang="less" scope>
 
 #couponcenterwrap {
-  margin-top: 50px;
+  padding-top: 50px;
   .center-list-show {
    .centerlist{
           height: calc(~"100vh - 213px");

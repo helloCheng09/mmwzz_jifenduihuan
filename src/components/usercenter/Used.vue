@@ -8,6 +8,7 @@
       @click="navtodetail(item.id)"
     >
       <img class="img-center" :src="item.pic">
+      <span class="coupencent-num-text" v-if="item.num !=  1">{{item.num}} 张</span>
       <div class="right">
         <dd class="two-ellipsis">{{item.name}}</dd>
         <dt class="two-ellipsis">{{item.intro}}</dt>
@@ -147,7 +148,7 @@ export default {
             _self.loadingani = false; // 关闭加载动画
             _self.isnone = true;
             _self.$message({
-              message: res.data.msg,
+              message: '数据请求失败~',
               center: true,
               duration: 1500,
               type: "error"

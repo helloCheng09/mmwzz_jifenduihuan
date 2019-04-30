@@ -73,8 +73,6 @@ export default {
     // 获取优惠券列表
     // this.show();
   },
-  activated() {
-  },
   beforeDestroy() {
     window.removeEventListener("scroll", _self.scrollLoad);
   },
@@ -181,7 +179,7 @@ export default {
 <style  lang='less' scope>
 // 优惠券列表公共样式
 #couponlistwrap {
-  margin-top: 50px;
+  padding-top: 50px;
 }
 .list-item {
   display: flex;
