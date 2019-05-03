@@ -44,7 +44,7 @@
       </div>
       <div class="bot-normal-item">
         <label>使用须知</label>
-        <div class="intro-text">{{coupondet.intro}}</div>
+        <div class="intro-text" v-html="coupondet.intro"></div>
       </div>
       <div class="bot-normal-item" v-if="qdcode && coupon_type == 1">
         <label>二维码信息</label>

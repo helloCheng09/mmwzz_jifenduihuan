@@ -39,7 +39,7 @@
       </div>
       <div class="bot-normal-item">
         <label>使用须知</label>
-        <div class="intro-text">{{coupondet.intro}}</div>
+        <div class="intro-text" v-html="coupondet.intro"></div>
       </div>
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
       student_id: '', // 学生id
       coupondet: this.$api().coupondet, // 优惠券详情请求地址
       couponexchange: this.$api().couponexchange, // 聪明豆兑换优惠券地址
+      coupondet_intro: '', // 优惠券的详情介绍（富文本）
     };
   },
   beforeMount () {
@@ -78,6 +79,7 @@ export default {
           if (res.data.code == 1) {
             var data = res.data.data
             _self.coupondet = data
+            _self.coupondet_intro = data.intro
           } else {
             alert(res.data.msg)
           }
@@ -124,7 +126,7 @@ export default {
             // alert(res.data.msg)
             // _self.$message.error(res.data.msg);
             _self.$message({
-              message: res.data.msg,
+              message: '数据请求失败~',
               center: true,
               duration: 1500,
               type: 'error',

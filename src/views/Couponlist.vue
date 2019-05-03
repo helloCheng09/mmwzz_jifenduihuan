@@ -129,7 +129,6 @@ export default {
             // _self.mytimer = setTimeout(() => {
               
               var documentTop = _self.$refs.elememtList.offsetHeight; //全部内容的高
-              console.log(documentTop)
               var screenHeight = window.screen.availHeight; //当前屏幕的高
               if (documentTop < screenHeight) {
                 _self.getlist({
@@ -139,13 +138,12 @@ export default {
                 return false;
               }
             // }, 0);
-
           
           } else {
             _self.loadingani = false; // 关闭加载动画
             _self.isnone = true;
             _self.$message({
-              message: res.data.msg,
+              message: '获取数据失败~',
               center: true,
               duration: 1500,
               type: "error"

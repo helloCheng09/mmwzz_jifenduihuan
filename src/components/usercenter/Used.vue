@@ -11,7 +11,7 @@
       <span class="coupencent-num-text" v-if="item.num !=  1">{{item.num}} 张</span>
       <div class="right">
         <dd class="two-ellipsis">{{item.name}}</dd>
-        <dt class="two-ellipsis">{{item.intro}}</dt>
+        <dt class="two-ellipsis" v-html="item.intro"></dt>
         <div class="cou-price center-price">
           <!-- <span class="price-num">{{coupondet.coupon_price}}</span>
           <span class="price-dou">聪明豆</span>-->
