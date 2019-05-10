@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 
 function api () {
     return {
-        couponlisturl: baseUrl +  'couponlist.html', // 优惠券列表
+        couponlisturl: baseUrl +  'couponlist2.html', // 优惠券列表
         coupondet: baseUrl + 'coupondetail', // 优惠券详情
         couponexchange: baseUrl + 'couponexchang', // 购买优惠券
         couponcenter: baseUrl + 'couponcenter', // 已经购买的优惠券列表

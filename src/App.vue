@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav" v-if="navshow">
       <div class="nav-list">
-        <router-link :to="'/couponlist/'+ student_id" >兑换优惠券</router-link>
+        <router-link :to="'/couponlist2/'+ student_id" >兑换优惠券</router-link>
         <router-link :to="'/couponcenter/'+ student_id">我的优惠券</router-link>
       </div>
     </div>

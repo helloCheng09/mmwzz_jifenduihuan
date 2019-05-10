@@ -126,7 +126,7 @@ export default {
             // alert(res.data.msg)
             // _self.$message.error(res.data.msg);
             _self.$message({
-              message: '数据请求失败~',
+              message: res.data.msg,
               center: true,
               duration: 1500,
               type: 'error',
